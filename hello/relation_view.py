@@ -71,7 +71,7 @@ def search_relation(request):
 
 		#若输入entity1和entity2,则输出entity1和entity2之间的最短路径
 		if(len(entity1) !=0 and len(relation) == 0 and len(entity2)!=0):
-			searchResult = db.testrelation(entity1,entity2)
+			searchResult = db.findRelationByEntities(entity1,entity2)
 			if(len(searchResult)>0):
 				print(searchResult)
 				return render(request,'relation.html',{'searchResult':json.dumps(searchResult,ensure_ascii=False)})

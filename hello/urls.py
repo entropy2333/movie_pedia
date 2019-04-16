@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from . import index_html, relation_view, overview_view
+from . import index_html, relation_view, overview_view, detail_view
 
 urlpatterns = [
     url(r'^$', index_html.index),
     url(r'^search_entity',relation_view.search_entity),
     url(r'^search_relation',relation_view.search_relation),
-    url(r'^overview', overview_view.show_overview)
+    url(r'^overview', overview_view.show_overview),
+    url(r'^detail', overview_view.show_overview)
 ]

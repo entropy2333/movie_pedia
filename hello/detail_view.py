@@ -6,8 +6,8 @@ import thulac
 import sys
 sys.path.append("..")
 from toolkit.pre_load import neo_con
-from toolkit.pre_load import wv_model, tree ,predict_labels
-from toolkit.NER import get_explain,get_detail_explain
+# from toolkit.pre_load import wv_model, tree ,predict_labels
+# from toolkit.NER import get_explain,get_detail_explain
 
 # 接收GET请求数据
 def showdetail(request):
@@ -17,7 +17,7 @@ def showdetail(request):
 		db = neo_con
 		
 		title = request.GET['title']
-		answer = db.matchFilmItembyTitle(title)
+		answer = db.matchFilmbyTitle(title)
 		if answer == None:
 			return render(request, "404.html", ctx) 
 

@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^search_entity',relation_view.search_entity),
     url(r'^search_relation',relation_view.search_relation),
     url(r'^overview', overview_view.show_overview),
-    url(r'^detail', overview_view.show_overview)
+    url(r'^detail', detail_view.showdetail)
 ]

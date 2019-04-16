@@ -15,7 +15,7 @@ class Neo4j():
 
 	# 根据title值返回互动百科item
 	def matchFilmbyTitle(self,value):
-		sql = "MATCH (n:film { title: '" + str(value) + "' }) return n;"
+		sql = "MATCH (n:film { title: \"" + str(value) + "\" }) return n"
 		answer = self.graph.run(sql).data()
 		return answer
 	# 根据entity的名称返回关系

@@ -22,7 +22,7 @@ def showdetail(request):
 			return render(request, "404.html", ctx) 
 
 		if len(answer) > 0:
-			answer = answer[0]
+			answer = answer[0]['n']
 		else:
 			ctx['title'] = '实体条目出现未知错误'
 			return
@@ -30,20 +30,23 @@ def showdetail(request):
 		ctx['title'] = answer['title']
 
 		ctx['baseInfoKeyList'] = []                     #条目名
-		ctx['baseInfoKeyList'].append('release_year')
-		ctx['baseInfoKeyList'].append('score')
+		ctx['baseInfoKeyList'].append('发行时间')
+		ctx['baseInfoKeyList'].append('评分')
+		ctx['baseInfoKeyList'].append('评分人数')
 
 		ctx['baseInfoValueList'] = []                   #条目内容
 		p1 = answer['release_year']
 		p2 = answer['score']
+		p3 = answer['vote_count']
 		ctx['baseInfoValueList'].append(p1)
 		ctx['baseInfoValueList'].append(p2)
+		ctx['baseInfoValueList'].append(p3)
 
 		text = '<table class="table table-striped table-advance table-hover"> <tbody>'
 		keyList = ctx['baseInfoKeyList']
 		valueList = ctx['baseInfoValueList']
-		i = 0
 
+		i = 0
 		while i < len(keyList) :
 			value = " "
 			if i < len(valueList):
@@ -64,41 +67,45 @@ def showdetail(request):
 			i += 1
 			text += "</tr>"
 		text += " </tbody> </table>"
-		if answer['baseInfoKeyList'].strip() == '':
+		if answer['release_year'].strip() == '':
+			text = ''
+		if answer['score'].strip() == '':
+			text = ''
+		if answer['vote_count'].strip() == '':
 			text = ''
 		ctx['baseInfoTable'] = text 
 		
-		tagcloud = ""
-		taglist = wv_model.get_simi_top(answer['title'], 10)
-		for tag in taglist:
-			tagcloud += '<a href= "./detail.html?title=' + str(tag) + '"> '
-			tagcloud += str(tag) + "</a>"
-#			print(tag)
-		ctx['tagcloud'] = tagcloud
+# 		tagcloud = ""
+# 		taglist = wv_model.get_simi_top(answer['title'], 10)
+# 		for tag in taglist:
+# 			tagcloud += '<a href= "./detail.html?title=' + str(tag) + '"> '
+# 			tagcloud += str(tag) + "</a>"
+# #			print(tag)
+# 		ctx['tagcloud'] = tagcloud
 		
-		movie_type = ""
-		ansList = tree.get_path(answer['title'], True)
-		for List in ansList:
-			agri_type += '<p >'
-			flag = 1
-			for p in List:
-				if flag == 1:
-					flag = 0
-				else:
-					agri_type += ' / '
-				agri_type += str(p)
+		# movie_type = ""
+		# ansList = tree.get_path(answer['title'], True)
+		# for List in ansList:
+		# 	agri_type += '<p >'
+		# 	flag = 1
+		# 	for p in List:
+		# 		if flag == 1:
+		# 			flag = 0
+		# 		else:
+		# 			agri_type += ' / '
+		# 		agri_type += str(p)
 				
-			agri_type += '</p>'	
-		if len(ansList) == 0:
-			agri_type = '<p > 暂无电影类型</p>'
-		ctx['agri_type'] = agri_type	
+		# 	agri_type += '</p>'	
+		# if len(ansList) == 0:
+		# 	agri_type = '<p > 暂无电影类型</p>'
+		# ctx['agri_type'] = agri_type	
 		
-		entity_type = ""
-		explain = get_explain(predict_labels[answer['title']])
-		detail_explain = get_detail_explain(predict_labels[answer['title']])
-		entity_type += '<p > [' + explain + "]: "
-		entity_type += detail_explain + "</p>"
-		ctx['entity_type'] = entity_type	
+		# entity_type = ""
+		# explain = get_explain(predict_labels[answer['title']])
+		# detail_explain = get_detail_explain(predict_labels[answer['title']])
+		# entity_type += '<p > [' + explain + "]: "
+		# entity_type += detail_explain + "</p>"
+		# ctx['entity_type'] = entity_type	
 			
 	else:
 		return render(request, "404.html", ctx) 		

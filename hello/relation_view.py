@@ -5,14 +5,14 @@ from django.http import JsonResponse
 import os
 
 import json
-relationCountDict = {}
-filePath = os.path.abspath(os.path.join(os.getcwd(),"."))
-with open(filePath+"/toolkit/relationStaticResult.txt","r") as fr:
-	for line in fr:
-		relationNameCount = line.split(",")
-		relationName = relationNameCount[0][2:-1]
-		relationCount = relationNameCount[1][1:-2]
-		relationCountDict[relationName] = int(relationCount)
+# relationCountDict = {}
+# filePath = os.path.abspath(os.path.join(os.getcwd(),"."))
+# with open(filePath+"/toolkit/relationStaticResult.txt","r") as fr:
+# 	for line in fr:
+# 		relationNameCount = line.split(",")
+# 		relationName = relationNameCount[0][2:-1]
+# 		relationCount = relationNameCount[1][1:-2]
+# 		relationCountDict[relationName] = int(relationCount)
 
 def search_entity(request):
 	ctx = {}

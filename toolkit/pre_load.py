@@ -16,8 +16,8 @@ print('neo4j connected!')
 # 读取电影层次树
 filePath = os.getcwd()
 tree = TREE()
-tree.read_edge(filePath+'\movie_tree.txt')
-tree.read_leaf(filePath+'\leaf.txt')
+tree.read_edge(filePath+'\\toolkit\movie_tree.txt')
+tree.read_leaf(filePath+'\\toolkit\leaf.txt')
 
 # # 预加载mongodb
 # mongo = Mongo()

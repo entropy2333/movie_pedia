@@ -8,16 +8,12 @@ class Neo4j():
 	def connectDB(self):
 		self.graph = Graph("http://localhost:7474", username="neo4j", password="daha1009")
 
-	# def matchItembyTitle(self,value):
-	# 	sql = "MATCH (n:film { title: '" + str(value) + "' }) return n;"
-	# 	answer = self.graph.run(sql).data()
-	# 	return answer
-
-	# 根据title值返回互动百科item
+	# 根据title值返回电影
 	def matchFilmbyTitle(self,value):
 		sql = "MATCH (n:film { title: \"" + str(value) + "\" }) return n"
 		answer = self.graph.run(sql).data()
 		return answer
+
 	# 根据entity的名称返回关系
 	def getEntityRelationbyEntity(self,value):
 		answer = self.graph.run("MATCH (entity1) - [rel] - (entity2)  WHERE entity1.title = \"" +str(value)+"\" RETURN rel,entity2").data()
@@ -67,7 +63,11 @@ class Neo4j():
 
 		return answer
 
-	def testrelation(self,entity1,entity2):
-		answer = self.graph.run("MATCH p = (:film{title:\""+str(entity1)+"\"})- [r] - () - [R] (:actor{title:\""+str(entity2)+"\"}) RETURN p" ).data()
-		
-		return answer
+# neo_con = Neo4j()
+# neo_con.connectDB()
+# answer=neo_con.findOtherEntities("肖申克的救赎","casts of film")
+# l = ""
+# for dic in answer:
+# 	l += str(dic['n2']['title'])
+# 	l += ' '
+# print(l)

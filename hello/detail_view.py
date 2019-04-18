@@ -28,19 +28,35 @@ def showdetail(request):
 			return
 		
 		ctx['title'] = answer['title']
-
+		ctx['image'] = '<img src=/static/img/pic/' + answer['title'] + '.jpg alt="该条目无图片" height="100%" width="100%" >'
 		ctx['baseInfoKeyList'] = []                     #条目名
-		ctx['baseInfoKeyList'].append('发行时间')
+		ctx['baseInfoKeyList'].append('类型')
 		ctx['baseInfoKeyList'].append('评分')
+		ctx['baseInfoKeyList'].append('发行时间')
 		ctx['baseInfoKeyList'].append('评分人数')
+		ctx['baseInfoKeyList'].append('主演')
 
 		ctx['baseInfoValueList'] = []                   #条目内容
-		p1 = answer['release_year']
+		
+		type_of_film = db.findOtherEntities(answer['title'],"type of film")
+		casts_of_film = db.findOtherEntities(answer['title'],"casts of film")
+		p1 = ""
+		p5 = ""
+		for dic in type_of_film:
+			p1 += str(dic['n2']['title'])
+			p1 += " "
 		p2 = answer['score']
-		p3 = answer['vote_count']
+		p3 = answer['release_year']
+		p4 = answer['vote_count']
+		for dic in casts_of_film:
+			p5 += str(dic['n2']['title'])
+			p5 += " "
+		
 		ctx['baseInfoValueList'].append(p1)
 		ctx['baseInfoValueList'].append(p2)
 		ctx['baseInfoValueList'].append(p3)
+		ctx['baseInfoValueList'].append(p4)
+		ctx['baseInfoValueList'].append(p5)
 
 		text = '<table class="table table-striped table-advance table-hover"> <tbody>'
 		keyList = ctx['baseInfoKeyList']
@@ -67,12 +83,6 @@ def showdetail(request):
 			i += 1
 			text += "</tr>"
 		text += " </tbody> </table>"
-		if answer['release_year'].strip() == '':
-			text = ''
-		if answer['score'].strip() == '':
-			text = ''
-		if answer['vote_count'].strip() == '':
-			text = ''
 		ctx['baseInfoTable'] = text 
 		
 # 		tagcloud = ""
